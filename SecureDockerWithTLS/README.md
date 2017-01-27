@@ -108,7 +108,7 @@ root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerWithTLS# ./dockertls -i ~/
 'key.pem' -> '/root/.docker/key.pem'
  ====> Done!
 ```
-check docker service status an it is active in Drop-In mode . 
+Check docker service status an it is active in Drop-In mode . 
 ```
 root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerWithTLS# systemctl status docker
 ● docker.service - Docker Application Container Engine

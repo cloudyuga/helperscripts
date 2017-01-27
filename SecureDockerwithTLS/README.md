@@ -26,7 +26,7 @@ Step 3: Go to the `helperscripts/SecureDockerwithTLS/` directory
 ```
 root@ubuntu-512mb-blr1-01:~# cd helperscripts/SecureDockerwithTLS/
 ```
-Scripts are shown on that directory, they are executable file.(Note : Don't chanage the permission)
+Scripts are shown on that directory, they are executable file.(Note : Don't change the permission)
 ```
 root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerwithTLS# ls
 dockertls  generatetls  README.md

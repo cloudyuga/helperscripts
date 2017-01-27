@@ -1,6 +1,6 @@
 ## Self signed SSL certificate generator and Configure Docker remote API with TLS.
 
-### How to use this script?
+### How to use this scripts?
 
 Step 1: Need to install openssl, git and its dependencies.If already then don't do.
 ```

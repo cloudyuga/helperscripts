@@ -19,9 +19,9 @@ Checking connectivity... done.
 ```
 #### For generating TLS certificates.
 
-Step 3: Go to the `helperscripts/SecureDockerwithTLS/` directory
+Step 3: Go to the `helperscripts/SecureDockerWithTLS/` directory
 ```
-root@ubuntu-512mb-blr1-01:~# cd helperscripts/SecureDockerwithTLS/
+root@ubuntu-512mb-blr1-01:~# cd helperscripts/SecureDockerWithTLS/
 ```
 Scripts are shown on that directory, they are executable file.(Note : Don't change the permission)
 ```
@@ -32,7 +32,7 @@ Run a script  generatetls with output argument `-o`
 
 Use `-o` argument for output and `~/certs` dir path were certificate generate or save.
 ```
-root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerwithTLS# ./generatetls -o ~/certs
+root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerWithTLS# ./generatetls -o ~/certs
 ====> Certificate Authority
 ====> Generating location /root/certs
  ====> Generating CA key
@@ -76,7 +76,7 @@ mode of 'server-key.pem' changed from 0644 (rw-r--r--) to 0600 (rw-------)
 ```
 Check generated file in `~/certs/ shown something like:
 ```
-root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerwithTLS# ls ~/certs/
+root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerWithTLS# ls ~/certs/
 ca-key.pem  ca.pem  ca.srl  cert.pem  extfile_client.conf  extfile.conf  key.pem  server-cert.pem  server-key.pem
 ```
 ####For configuring a secure Docker remote API with TLS 
@@ -85,7 +85,7 @@ Step 3: Run an another script  dockertls with input argument `-i`
 
 Use `-i` argument for input and `~/certs` dir path locate were certificate generate or save .
 ```
-root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerwithTLS# ./dockertls -i ~/certs/
+root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerWithTLS# ./dockertls -i ~/certs/
 ====> Certificates location /root/certs/
 ====> Copy CA key to default location
 'ca-key.pem' -> '/etc/docker/ca-key.pem'
@@ -110,7 +110,7 @@ root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerwithTLS# ./dockertls -i ~/
 ```
 check docker service status an it is active in Drop-In mode . 
 ```
-root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerwithTLS# systemctl status docker
+root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerWithTLS# systemctl status docker
 ● docker.service - Docker Application Container Engine
    Loaded: loaded (/lib/systemd/system/docker.service; enabled; vendor preset: enabled)
   Drop-In: /etc/systemd/system/docker.service.d
@@ -140,7 +140,7 @@ Finally an automated script done:
 
 check by list containers:
 ```
-root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerwithTLS# docker ps
+root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerWithTLS# docker ps
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
 ```
 check by list images:
@@ -150,7 +150,7 @@ REPOSITORY          TAG                 IMAGE ID            CREATED             
 ```
 Pull an image or a repository from a registry:
 ```
-root@ved-ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerwithTLS# docker pull alpine
+root@ved-ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerWithTLS# docker pull alpine
 Using default tag: latest                                                                                                             
 latest: Pulling from library/alpine                                                                                                   
 0a8490d0dfd3: Pull complete 
@@ -159,7 +159,7 @@ Status: Downloaded newer image for alpine:latest
 ```
 check by list images were we pull an image from a registry :
 ```
-root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerwithTLS# docker images
+root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerWithTLS# docker images
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
 alpine              latest              88e169ea8f46        4 weeks ago         3.98 MB
 ```  

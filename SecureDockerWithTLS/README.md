@@ -25,7 +25,7 @@ root@ubuntu-512mb-blr1-01:~# cd helperscripts/SecureDockerWithTLS/
 ```
 Scripts are shown on that directory, they are executable file.(Note : Don't change the permission)
 ```
-root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerwithTLS# ls
+root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerWithTLS# ls
 dockertls  generatetls  README.md
 ```
 Run a script  generatetls with output argument `-o`

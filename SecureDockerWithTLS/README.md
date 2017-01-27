@@ -139,14 +139,14 @@ Jan 27 06:33:45 ved-ubuntu-512mb-blr1-01 dockerd[29397]: time="2017-01-27T06:33:
 Finally an automated script done:
 
 
-check in local machine by list containers:
+Check in local machine by list containers:
 ```
 root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerWithTLS# docker --tls=true --tlscert=/etc/dockerca.pem \
 > --tlscert=/etc/docker/server-cert.pem \
 > --tlskey=/etc/docker/server-key.pem -H=127.0.0.1:2376 ps
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
 ```
-check in local machine by list images:
+Check in local machine by list images:
 ```
 root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerWithTLS# docker --tls=true --tlscert=/etc/dockerca.pem \
 > --tlscert=/etc/docker/server-cert.pem \
@@ -164,7 +164,7 @@ latest: Pulling from library/alpine
 Digest: sha256:dfbd4a3a8ebca874ebd2474f044a0b33600d4523d03b0df76e5c5986cb02d7e8
 Status: Downloaded newer image for alpine:latest
 ```
-check in local machine by list images were we pull an image from a registry :
+Check in local machine by list images were we pull an image from a registry :
 ```
 root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerWithTLS# docker --tls=true --tlscert=/etc/dockerca.pem \
 > --tlscert=/etc/docker/server-cert.pem \

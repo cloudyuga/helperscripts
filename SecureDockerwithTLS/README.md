@@ -5,51 +5,56 @@
 
 ### How to use this script?
 
-Step 1: Need to install openssl, git and its dependencies.
+Step 1: Need to install openssl, git and its dependencies.If alraedy then don't do.
+```
+root@ubuntu-512mb-blr1-01:~# apt install openssl git
+```
 
 Step 2: Cloning a repository from GitHub.
 ```
-$ git clone https://github.com/cloudyuga/helperscripts.git
+root@ubuntu-512mb-blr1-01:~# git clone https://github.com/cloudyuga/helperscripts.git
 Cloning into 'helperscripts'...
-remote: Counting objects: 24, done.
-remote: Compressing objects: 100% (20/20), done.
-remote: Total 24 (delta 0), reused 24 (delta 0), pack-reused 0
-Unpacking objects: 100% (24/24), done.
+remote: Counting objects: 36, done.
+remote: Compressing objects: 100% (31/31), done.
+remote: Total 36 (delta 2), reused 35 (delta 1), pack-reused 0
+Unpacking objects: 100% (36/36), done.
 Checking connectivity... done.
 ```
 Step 3: Go to the `helperscripts/SecureDockerwithTLS/` directory
 ```
-$ cd helperscripts/SecureDockerwithTLS/
-$ ls
+root@ubuntu-512mb-blr1-01:~# cd helperscripts/SecureDockerwithTLS/
+root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerwithTLS# ls
 dockertls  generatetls  README.md
 ```
-Use `-o` argument for output and `~/certs` dir path
+Run a generatetls
+
+Use `-o` argument for output and `~/certs` dir path were certificate generate or save .
 ```
-$ ./generatetls -o ~/certs
+root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerwithTLS# ./generatetls -o ~/certs
 ====> Certificate Authority
 ====> Generating location /root/certs
  ====> Generating CA key
 Generating RSA private key, 4096 bit long modulus
-........................................................................................................................................................................................................++
-..++
+.........................................................................................................................................................................................................................................++
+................................................................................................................................................++
 e is 65537 (0x10001)
  ====> Generating CA
  ====> Generating server key
 Generating RSA private key, 4096 bit long modulus
-............................++
-............................................................................................................................................++
+...++
+.............................................................................................................................................................................................................................................................++
 e is 65537 (0x10001)
  ====> Generating server CSR
  ====> Creating subject alternative name
-subjectAltName = IP:10.0.2.15,IP:127.0.0.1
+subjectAltName = IP:139.59.39.36,IP:127.0.0.1
  ====> Signing server CSR with CA
 Signature ok
 subject=/CN=dockerhost.example.com
 Getting CA Private Key
  ====> Generating client key
 Generating RSA private key, 4096 bit long modulus
-.............................................++
-.............++
+.....................................................................................................................................................................................++
+..........................................................................++
 e is 65537 (0x10001)
  =====> Generating client CSR
  ===> Creating extended key usage
@@ -67,3 +72,9 @@ mode of 'server-cert.pem' changed from 0644 (rw-r--r--) to 0600 (rw-------)
 mode of 'server-key.pem' changed from 0644 (rw-r--r--) to 0600 (rw-------)
  ====> Done!
 ```
+Check generated file in `~/certs/ shown like:
+```
+root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerwithTLS# ls ~/certs/
+ca-key.pem  ca.pem  ca.srl  cert.pem  extfile_client.conf  extfile.conf  key.pem  server-cert.pem  server-key.pem
+```
+Step 3:

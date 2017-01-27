@@ -191,7 +191,7 @@ latest: Pulling from library/nginx
 Digest: sha256:f2d384a6ca8ada733df555be3edc427f2e5f285ebf468aae940843de8cf74645
 Status: Downloaded newer image for nginx:latest
 ```
-Check by list image, An is there two images something show like: 
+Check by list image, An is there two images something shown like: 
 ```
 root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerwithTLS# docker images
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE

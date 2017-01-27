@@ -1,0 +1,105 @@
+#!/bin/bash
+usage="
+  ./$(basename "$0") -- This script provided by CloudYuga Technology Pvt Ltd.
+
+        USAGE :  Use syntax ./$(basename "$0") -o /<path>/<to>/<certs>/
+                  
+                  Certificates output create on local /<dir>/<path>/ destination.
+                  Because when TLS script start generating they locate the path and save it. 
+                
+        HINT  : 
+                    Example: ./$(basename "$0") -o /tmp/certs/
+        
+        DESCRIPTION
+                  It is an automated TLS  generator script to configure and 
+                  connect Docker daemon remotely and securely.
+
+         NOTE :
+                Generate three  kinds of certificates:
+              1) CA certificates used for generating server certificates and client certificates.
+              2) Client certificates used by remote Docker client.
+              3) Server certificates used by server Docker daemon.
+    "
+
+while getopts ':ho:' option  ; do
+  case "$option" in
+    h) echo "$usage"
+       exit
+       ;;
+    o) if [ $# -ne 0 ]; then
+          LOCATION="$2"
+       fi
+       shift 2
+       ;;
+    :) printf " ./$(basename "$0") -%s <missing argument> \n" "$OPTARG" >&2
+       echo "Try ./$(basename "$0") -h for more information." >&2
+       exit 1
+       ;;
+   \?) printf "./$(basename "$0"): invalid option -%s\n" "$OPTARG" >&2
+       echo "Try ./$(basename "$0") -h for more information." >&2
+       exit 1
+       ;;
+  esac
+done
+
+export CA_COUNTRY=${CA_COUNTRY:-"IN"}
+export CA_STATE=${CA_STATE:-"KARNATAKA"}
+export CA_CITY=${CA_CITY:-"BANGALORE"}
+export CA_O=${CA_O:-"CLOUDYUGA TECHNOLOGY PVT. LTD."}
+export CA_OU=${CA_OU:-"TRAINING"}
+export CA_CN=${CA_CN:-"dockerhost.example.com"}
+export CA_EMAIL=${CA_EMAIL:-"team@cloudyuga.guru"}
+export CA_PASSWORD=${CA_PASSWORD:-"1234"}
+export SERVER_CN=${SERVER_CN:-"${CA_CN}"}
+export CLIENT_CN=${CLIENT_CN:-"client"}
+
+
+echo "====> Certificate Authority"
+
+echo "====> Generating location ${LOCATION}"
+mkdir -p ${LOCATION}
+cd ${LOCATION}
+
+echo " ====> Generating CA key"
+openssl genrsa -aes256 -passout pass:${CA_PASSWORD} -out ca-key.pem 4096
+
+echo " ====> Generating CA"
+openssl req -new -x509 -days 365 -key ca-key.pem -sha256 -passin pass:${CA_PASSWORD} \
+ -subj "/C=${CA_COUNTRY}/ST=${CA_STATE}/O=${CA_O}/L=${CA_CITY}/OU=${CA_OU}/CN=${CA_CN}/emailAddress=${CA_EMAIL}" \
+ -sha256 -out ca.pem
+
+echo " ====> Generating server key"
+openssl genrsa -out server-key.pem 4096
+
+echo " ====> Generating server CSR"
+openssl req -subj "/CN=${SERVER_CN}" -new -key server-key.pem -out server.csr
+
+
+echo " ====> Creating subject alternative name"
+echo subjectAltName = IP:`hostname -I | awk '{print $1}'`,IP:127.0.0.1 > extfile.conf
+cat extfile.conf
+
+echo " ====> Signing server CSR with CA"
+openssl x509 -req -days 365 -in server.csr -CA ca.pem -CAkey ca-key.pem -CAcreateserial -passin pass:${CA_PASSWORD} -out server-cert.pem \
+-extfile extfile.conf
+
+echo " ====> Generating client key"
+openssl genrsa -out key.pem 4096
+
+echo " =====> Generating client CSR"
+openssl req -subj "/CN=client" -new -key key.pem -out client.csr
+
+echo " ===> Creating extended key usage"
+echo extendedKeyUsage = clientAuth > extfile_client.conf
+cat extfile_client.conf
+
+echo " =====> Signing client CSR with CA"
+openssl x509 -req -days 365 -in client.csr -CA ca.pem -CAkey ca-key.pem -CAcreateserial -passin pass:${CA_PASSWORD} -out cert.pem \
+ -extfile extfile_client.conf
+
+echo "====> Change certificates permission"
+chmod -v 0600 ca-key.pem ca.pem cert.pem key.pem server-cert.pem server-key.pem
+
+rm -f client.csr server.csr
+
+echo " ====> Done!"

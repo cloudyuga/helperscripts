@@ -1,0 +1,93 @@
+#!/bin/bash
+usage="
+  ./$(basename "$0") -- This script provided by CloudYuga Technology Pvt Ltd.
+
+        USAGE :  Use syntax ./$(basename "$0") -i /<locate>/<certs>/<path>/
+
+                  An automated script will help to setup Docker for TLS authentication. 
+                  Certificates allow the connections remotely from the specific host and 
+                  the localhost.             
+                            
+        HINT  : 
+                    Example: ./$(basename "$0") -i /tmp/certs/
+        
+        DESCRIPTION
+                Simple step to setup Docker remote API with TLS:
+                1) Generate own certificates.
+                2) Copy server certificates to remote location.
+                3) Configure Docker with TLS certificates on remote location.
+                4) Copy client certificates to default remote location.
+             
+     "
+
+while getopts ':hi:' option  ; do
+  case "$option" in
+    h) echo "$usage"
+       exit
+       ;;
+    i) if [ $# -ne 0 ]; then
+          LOCATION="$2"
+       fi
+       shift 2
+       ;;
+    :) printf " ./$(basename "$0") -%s <missing argument> \n" "$OPTARG" >&2
+       echo "Try ./$(basename "$0") -h for more information." >&2
+       exit 1
+       ;;
+   \?) printf "./$(basename "$0"): invalid option -%s\n" "$OPTARG" >&2
+       echo "Try ./$(basename "$0") -h for more information." >&2
+       exit 1
+       ;;
+  esac
+done
+
+echo "====> Certificates location ${LOCATION}"
+cd ${LOCATION}
+
+echo "====> Copy CA key to default location"
+cp -av ca-key.pem /etc/docker
+
+echo "====> Copy CA certificate to default location"
+cp -av ca.pem /etc/docker
+
+echo "====> Copy server key to remote location"
+cp -av server-key.pem /etc/docker
+
+echo "====> Copy server certificate to remote location"
+cp -av server-cert.pem /etc/docker
+
+echo "====> Copy client key to remote location"
+cp -av key.pem /etc/docker
+
+echo "====> Copy client certificate to remote location"
+cp -av cert.pem /etc/docker
+
+
+echo "====> Setup Docker remote API with TLS certificates"
+mkdir -p  /etc/systemd/system/docker.service.d/
+
+cat > /etc/systemd/system/docker.service.d/docker.conf <<EOM
+[Service]
+#  ExecStart must be cleared before being re-assigned
+ExecStart=
+ExecStart=/usr/bin/dockerd -H fd:// -D --tls=true --tlscert=/etc/docker/ca.pem --tlscert=/etc/docker/server-cert.pem --tlskey=/etc/docker/server-key.pem -H=0.0.0.0:2376
+EOM
+
+echo "====> Reload system daemon service"
+systemctl daemon-reload
+
+echo "====> Restart Docker service"
+systemctl restart docker
+
+echo "====> Need to set the following environment variables before running the Docker client"
+mkdir -p /root/.docker
+
+cp -av {ca,cert,key}.pem /root/.docker
+
+echo "export DOCKER_HOST=tcp://`hostname -I | awk '{print $1}'`:2376" >> /root/.bashrc
+
+echo "export DOCKER_TLS_VERIFY=1" >> /root/.bashrc
+
+source /root/.bashrc
+
+echo " ====> Done!"

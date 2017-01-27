@@ -33,7 +33,7 @@ dockertls  generatetls  README.md
 ```
 Run a script  generatetls with output argument `-o`
 
-Use `-o` argument for output and `~/certs` dir path were certificate generate or save .
+Use `-o` argument for output and `~/certs` dir path were certificate generate or save.
 ```
 root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerwithTLS# ./generatetls -o ~/certs
 ====> Certificate Authority

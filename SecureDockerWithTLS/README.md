@@ -165,7 +165,7 @@ latest: Pulling from library/alpine
 Digest: sha256:dfbd4a3a8ebca874ebd2474f044a0b33600d4523d03b0df76e5c5986cb02d7e8
 Status: Downloaded newer image for alpine:latest
 ```
-Check in local machine by list images were we pull an image from a registry :
+Check in local machine by list images were we pull an image from a registry:
 ```
 root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerWithTLS# docker --tls=true --tlscert=/etc/dockerca.pem \
 > --tlscert=/etc/docker/server-cert.pem \
@@ -175,7 +175,7 @@ alpine              latest              88e169ea8f46        4 weeks ago         
 ``` 
 On client machine, Script setup the Docker host and test an out with Docker commands:
 
-Check by list containers
+Check by list containers:
 ```
 root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerwithTLS# docker ps
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES   

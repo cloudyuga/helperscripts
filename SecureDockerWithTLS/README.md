@@ -141,21 +141,21 @@ Finally an automated script done:
 
 check in local machine by list containers:
 ```
-root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerwithTLS# docker --tls=true --tlscert=/etc/dockerca.pem \
+root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerWithTLS# docker --tls=true --tlscert=/etc/dockerca.pem \
 > --tlscert=/etc/docker/server-cert.pem \
 > --tlskey=/etc/docker/server-key.pem -H=127.0.0.1:2376 ps
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
 ```
 check in local machine by list images:
 ```
-root@ved-ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerwithTLS# docker --tls=true --tlscert=/etc/dockerca.pem \
+root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerWithTLS# docker --tls=true --tlscert=/etc/dockerca.pem \
 > --tlscert=/etc/docker/server-cert.pem \
 > --tlskey=/etc/docker/server-key.pem -H=127.0.0.1:2376 images
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
 ```
 Pull an image or a repository from a registry:
 ```
-root@ved-ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerwithTLS# docker --tls=true --tlscert=/etc/dockerca.pem \
+root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerWithTLS# docker --tls=true --tlscert=/etc/dockerca.pem \
 > --tlscert=/etc/docker/server-cert.pem \
 > --tlskey=/etc/docker/server-key.pem -H=127.0.0.1:2376 pull alpine
 Using default tag: latest                                                                                                             
@@ -166,7 +166,7 @@ Status: Downloaded newer image for alpine:latest
 ```
 check in local machine by list images were we pull an image from a registry :
 ```
-root@ved-ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerwithTLS# docker --tls=true --tlscert=/etc/dockerca.pem \
+root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerWithTLS# docker --tls=true --tlscert=/etc/dockerca.pem \
 > --tlscert=/etc/docker/server-cert.pem \
 > --tlskey=/etc/docker/server-key.pem -H=127.0.0.1:2376 images
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE

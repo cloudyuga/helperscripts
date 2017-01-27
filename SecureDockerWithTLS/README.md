@@ -182,7 +182,7 @@ CONTAINER ID        IMAGE               COMMAND             CREATED             
 ```
 Pull an image or a repository from a registry:
 ```      
-root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerwithTLS# docker pull alpine
+root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerwithTLS# docker pull nginx
 Using default tag: latest
 latest: Pulling from library/nginx
 5040bd298390: Pull complete 

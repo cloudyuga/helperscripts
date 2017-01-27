@@ -162,7 +162,7 @@ Status: Downloaded newer image for alpine:latest
 ```
 check by list images were we pull an image from a registry :
 ```
-root@ved-ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerwithTLS# docker images
+root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerwithTLS# docker images
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
 alpine              latest              88e169ea8f46        4 weeks ago         3.98 MB
 ```  

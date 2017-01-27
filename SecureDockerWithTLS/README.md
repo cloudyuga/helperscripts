@@ -28,7 +28,7 @@ Scripts are shown on that directory, they are executable file.(Note : Don't chan
 root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerWithTLS# ls
 dockertls  generatetls  README.md
 ```
-Run a script  generatetls with output argument `-o`
+Run a script `generatetls` with output argument `-o`
 
 Use `-o` argument for output and `~/certs` dir path were certificate generate or save.
 ```
@@ -81,7 +81,7 @@ ca-key.pem  ca.pem  ca.srl  cert.pem  extfile_client.conf  extfile.conf  key.pem
 ```
 ####For configuring a secure Docker remote API with TLS 
 
-Step 3: Run an another script  dockertls with input argument `-i`
+Step 3: Run an another script  `dockertls` with input argument `-i`
 
 Use `-i` argument for input and `~/certs` dir path locate were certificate generate or save .
 ```

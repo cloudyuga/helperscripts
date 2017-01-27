@@ -81,9 +81,9 @@ ca-key.pem  ca.pem  ca.srl  cert.pem  extfile_client.conf  extfile.conf  key.pem
 ```
 ####For configuring a secure Docker remote API with TLS 
 
-Step 3: Run an another script  `dockertls` with input argument `-i`
+Step 3: Run an another script  `dockertls` with an input argument `-i`
 
-Use `-i` argument for input and `~/certs` dir path locate were certificate generate or save .
+Use `-i` argument for an input and `~/certs` dir path locate were certificate generate or save .
 ```
 root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerWithTLS# ./dockertls -i ~/certs/
 ====> Certificates location /root/certs/

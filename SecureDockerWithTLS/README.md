@@ -138,6 +138,7 @@ Jan 27 06:33:45 ved-ubuntu-512mb-blr1-01 dockerd[29397]: time="2017-01-27T06:33:
 ```
 Finally an automated script done:
 
+Test docker TLS connection
 
 Check in local machine by list containers:
 ```
@@ -172,4 +173,29 @@ root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerWithTLS# docker --tls=true
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
 alpine              latest              88e169ea8f46        4 weeks ago         3.98 MB
 ``` 
+On client machine, Script setup the Docker host and test out with Docker commands:
+
+Check by list containers
+```
+root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerwithTLS# docker ps
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES   
+```
+Pull an image or a repository from a registry:
+```      
+root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerwithTLS# docker pull alpine
+Using default tag: latest
+latest: Pulling from library/nginx
+5040bd298390: Pull complete 
+333547110842: Pull complete 
+4df1e44d2a7a: Pull complete 
+Digest: sha256:f2d384a6ca8ada733df555be3edc427f2e5f285ebf468aae940843de8cf74645
+Status: Downloaded newer image for nginx:latest
+```
+Check by list image, An is there two images something show like: 
+```
+root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerwithTLS# docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+nginx               latest              cc1b61406712        2 days ago          182 MB
+alpine              latest              88e169ea8f46        4 weeks ago         3.98 MB
+```
 

@@ -17,13 +17,13 @@ remote: Total 24 (delta 0), reused 24 (delta 0), pack-reused 0
 Unpacking objects: 100% (24/24), done.
 Checking connectivity... done.
 ```
-Step 3: Go to the 'helperscripts/SecureDockerwithTLS/' directory
+Step 3: Go to the `helperscripts/SecureDockerwithTLS/` directory
 ```
 $ cd helperscripts/SecureDockerwithTLS/
 $ ls
 dockertls  generatetls  README.md
 ```
-
+Use `-o` argument for output and `~/certs` dir path
 ```
 $ ./generatetls -o ~/certs
 ====> Certificate Authority

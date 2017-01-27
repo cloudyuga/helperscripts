@@ -20,13 +20,18 @@ remote: Total 36 (delta 2), reused 35 (delta 1), pack-reused 0
 Unpacking objects: 100% (36/36), done.
 Checking connectivity... done.
 ```
+#### For generating TLS certificates.
+
 Step 3: Go to the `helperscripts/SecureDockerwithTLS/` directory
 ```
 root@ubuntu-512mb-blr1-01:~# cd helperscripts/SecureDockerwithTLS/
+```
+Scripts are shown on that directory, they are already executable file.(Note : Don't chanage the permission)
+```
 root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerwithTLS# ls
 dockertls  generatetls  README.md
 ```
-Run a generatetls
+Run a script  generatetls with output argument `-o`
 
 Use `-o` argument for output and `~/certs` dir path were certificate generate or save .
 ```
@@ -77,4 +82,7 @@ Check generated file in `~/certs/ shown like:
 root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerwithTLS# ls ~/certs/
 ca-key.pem  ca.pem  ca.srl  cert.pem  extfile_client.conf  extfile.conf  key.pem  server-cert.pem  server-key.pem
 ```
+####For configuring the Docker remote API with TLS 
+
 Step 3:
+  

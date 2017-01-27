@@ -173,7 +173,7 @@ root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerWithTLS# docker --tls=true
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
 alpine              latest              88e169ea8f46        4 weeks ago         3.98 MB
 ``` 
-On client machine, Script setup the Docker host and test out with Docker commands:
+On client machine, Script setup the Docker host and test an out with Docker commands:
 
 Check by list containers
 ```

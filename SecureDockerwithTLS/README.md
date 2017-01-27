@@ -140,8 +140,29 @@ Jan 27 06:33:45 ved-ubuntu-512mb-blr1-01 dockerd[29397]: time="2017-01-27T06:33:
 Jan 27 06:33:45 ved-ubuntu-512mb-blr1-01 dockerd[29397]: time="2017-01-27T06:33:45.957000498Z" level=info msg="API listen 
 ```
 Finally an automated script done:
+
+check by list containers:
 ```
 root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerwithTLS# docker ps
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
 ```
-  
+check by list images:
+```
+root@ved-ubuntu-512mb-blr1-01:~# docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+```
+Pull an image or a repository from a registry:
+```
+root@ved-ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerwithTLS# docker pull alpine
+Using default tag: latest                                                                                                             
+latest: Pulling from library/alpine                                                                                                   
+0a8490d0dfd3: Pull complete 
+Digest: sha256:dfbd4a3a8ebca874ebd2474f044a0b33600d4523d03b0df76e5c5986cb02d7e8
+Status: Downloaded newer image for alpine:latest
+```
+check by list images were we pull an image from a registry :
+```
+root@ved-ubuntu-512mb-blr1-01:~# docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+alpine              latest              88e169ea8f46        4 weeks ago         3.98 MB
+```  

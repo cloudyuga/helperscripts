@@ -2,7 +2,7 @@
 
 ### How to use this scripts?
 
-Step 1: Need to install openssl, git and its dependencies.If already then don't do.
+Step 1: Need to install `openssl`,`git` and its dependencies.If already then don't do.
 ```
 root@ubuntu-512mb-blr1-01:~# apt install openssl git
 ```

@@ -140,17 +140,23 @@ Finally an automated script done:
 
 check by list containers:
 ```
-root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerWithTLS# docker ps
+root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerwithTLS# docker --tls=true --tlscert=/etc/dockerca.pem \
+> --tlscert=/etc/docker/server-cert.pem \
+> --tlskey=/etc/docker/server-key.pem -H=127.0.0.1:2376 ps
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
 ```
 check by list images:
 ```
-root@ved-ubuntu-512mb-blr1-01:~# docker images
+root@ved-ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerwithTLS# docker --tls=true --tlscert=/etc/dockerca.pem \
+> --tlscert=/etc/docker/server-cert.pem \
+> --tlskey=/etc/docker/server-key.pem -H=127.0.0.1:2376 images
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
 ```
 Pull an image or a repository from a registry:
 ```
-root@ved-ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerWithTLS# docker pull alpine
+root@ved-ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerwithTLS# docker --tls=true --tlscert=/etc/dockerca.pem \
+> --tlscert=/etc/docker/server-cert.pem \
+> --tlskey=/etc/docker/server-key.pem -H=127.0.0.1:2376 pull alpine
 Using default tag: latest                                                                                                             
 latest: Pulling from library/alpine                                                                                                   
 0a8490d0dfd3: Pull complete 
@@ -159,7 +165,10 @@ Status: Downloaded newer image for alpine:latest
 ```
 check by list images were we pull an image from a registry :
 ```
-root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerWithTLS# docker images
+root@ved-ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerwithTLS# docker --tls=true --tlscert=/etc/dockerca.pem \
+> --tlscert=/etc/docker/server-cert.pem \
+> --tlskey=/etc/docker/server-key.pem -H=127.0.0.1:2376 images
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
 alpine              latest              88e169ea8f46        4 weeks ago         3.98 MB
-```  
+``` 
+

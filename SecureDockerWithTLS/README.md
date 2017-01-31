@@ -2,12 +2,12 @@
 
 ### How to use this scripts?
 
-Step 1: Need to install `openssl`,`git` and its dependencies.If already then don't do.
+Step 1: To install `openssl`,`git` and its dependencies. If already installed then don't do it again.
 ```
 root@ubuntu-512mb-blr1-01:~# apt install openssl git
 ```
 
-Step 2: Cloning a repository from GitHub.
+Step 2: Clone the repository from GitHub.
 ```
 root@ubuntu-512mb-blr1-01:~# git clone https://github.com/cloudyuga/helperscripts.git
 Cloning into 'helperscripts'...
@@ -17,20 +17,20 @@ remote: Total 36 (delta 2), reused 35 (delta 1), pack-reused 0
 Unpacking objects: 100% (36/36), done.
 Checking connectivity... done.
 ```
-#### For generating TLS certificates.
+#### For generating TLS certificates on Local machine.
 
 Step 3: Go to the `helperscripts/SecureDockerWithTLS/` directory
 ```
 root@ubuntu-512mb-blr1-01:~# cd helperscripts/SecureDockerWithTLS/
 ```
-Scripts are shown on that directory, they are executable file.(Note : Don't change the permission)
+Scripts shown in the above directory, these are executable files.(Note : Don't change the permission)
 ```
 root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerWithTLS# ls
 dockertls  generatetls  README.md
 ```
-Run a script `generatetls` with output argument `-o`
+Run the script `generatetls` with output argument `-o`
 
-Use `-o` argument for output and `~/certs` dir path were certificate generate or save.
+Use `-o` argument for output and `~/certs` directory path where the certificates get generated.
 ```
 root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerWithTLS# ./generatetls -o ~/certs
 ====> Certificate Authority
@@ -74,16 +74,17 @@ mode of 'server-cert.pem' changed from 0644 (rw-r--r--) to 0600 (rw-------)
 mode of 'server-key.pem' changed from 0644 (rw-r--r--) to 0600 (rw-------)
  ====> Done!
 ```
-Check generated file in `~/certs/ shown something like:
+Check generated file in `~/certs/` directory.  There are following certificates files generated in this folder:
+
 ```
 root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerWithTLS# ls ~/certs/
 ca-key.pem  ca.pem  ca.srl  cert.pem  extfile_client.conf  extfile.conf  key.pem  server-cert.pem  server-key.pem
 ```
-####For configuring a secure Docker remote API with TLS 
+#### For configuring a secure Docker remote API with TLS 
 
-Step 3: Run an another script  `dockertls` with an input argument `-i`
+Step 3: Run the script named  `dockertls` with an input argument `-i`
 
-Use `-i` argument for an input and `~/certs` dir path locate were certificate generate or save .
+Use `-i` argument for an input and `~/certs` directory path where certificates are located .
 ```
 root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerWithTLS# ./dockertls -i ~/certs/
 ====> Certificates location /root/certs/
@@ -109,7 +110,7 @@ root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerWithTLS# ./dockertls -i ~/
  ====> Done!
 ```
 After execution of this script Docker daemon is secured with TLS and now docker daemon is running on `2376` port.
-Check Docker service status an it is an active in `Drop-In` mode . 
+Check Docker service status. 
 ```
 root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerWithTLS# systemctl status docker
 ● docker.service - Docker Application Container Engine
@@ -139,18 +140,18 @@ Jan 27 06:33:45 ved-ubuntu-512mb-blr1-01 dockerd[29397]: time="2017-01-27T06:33:
 ```
 Test docker TLS connection
 
-Check in local machine by list containers:
+Check list of containers present on local machine :
 ```
 root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerWithTLS# docker --tls=true --tlscert=/etc/docker/ca.pem  --tlscert=/etc/docker/server-cert.pem  --tlskey=/etc/docker/server-key.pem -H=127.0.0.1:2376 ps
 
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
 ```
-Check in local machine by list images:
+Check list of images present on local machine :
 ```
 root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerWithTLS# docker --tls=true --tlscert=/etc/docker/ca.pem  --tlscert=/etc/docker/server-cert.pem  --tlskey=/etc/docker/server-key.pem -H=127.0.0.1:2376 images
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
 ```
-Pull an image or a repository from a registry:
+Pull an image from a repository:
 ```
 root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerWithTLS# docker --tls=true --tlscert=/etc/docker/ca.pem  --tlscert=/etc/docker/server-cert.pem  --tlskey=/etc/docker/server-key.pem -H=127.0.0.1:2376 pull alpine
 Using default tag: latest                                                                                                             
@@ -159,7 +160,7 @@ latest: Pulling from library/alpine
 Digest: sha256:dfbd4a3a8ebca874ebd2474f044a0b33600d4523d03b0df76e5c5986cb02d7e8
 Status: Downloaded newer image for alpine:latest
 ```
-Check in local machine by list images were we pull an image from a registry:
+Check the imgaes present on local machines:
 ```
 root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerWithTLS# docker --tls=true --tlscert=/etc/docker/ca.pem  --tlscert=/etc/docker/server-cert.pem  --tlskey=/etc/docker/server-key.pem -H=127.0.0.1:2376 images
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE

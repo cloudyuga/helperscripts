@@ -108,6 +108,7 @@ root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerWithTLS# ./dockertls -i ~/
 'key.pem' -> '/root/.docker/key.pem'
  ====> Done!
 ```
+After execution of this script Docker daemon is secured with TLS and now docker daemon is running on `2376` port.
 Check Docker service status an it is an active in `Drop-In` mode . 
 ```
 root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerWithTLS# systemctl status docker
@@ -136,29 +137,22 @@ Jan 27 06:33:45 ved-ubuntu-512mb-blr1-01 systemd[1]: Started Docker Application 
 Jan 27 06:33:45 ved-ubuntu-512mb-blr1-01 dockerd[29397]: time="2017-01-27T06:33:45.956677649Z" level=info msg="API listen 
 Jan 27 06:33:45 ved-ubuntu-512mb-blr1-01 dockerd[29397]: time="2017-01-27T06:33:45.957000498Z" level=info msg="API listen 
 ```
-Finally an automated script done:
-
 Test docker TLS connection
 
 Check in local machine by list containers:
 ```
-root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerWithTLS# docker --tls=true --tlscert=/etc/dockerca.pem \
-> --tlscert=/etc/docker/server-cert.pem \
-> --tlskey=/etc/docker/server-key.pem -H=127.0.0.1:2376 ps
+root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerWithTLS# docker --tls=true --tlscert=/etc/docker/ca.pem  --tlscert=/etc/docker/server-cert.pem  --tlskey=/etc/docker/server-key.pem -H=127.0.0.1:2376 ps
+
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
 ```
 Check in local machine by list images:
 ```
-root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerWithTLS# docker --tls=true --tlscert=/etc/dockerca.pem \
-> --tlscert=/etc/docker/server-cert.pem \
-> --tlskey=/etc/docker/server-key.pem -H=127.0.0.1:2376 images
+root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerWithTLS# docker --tls=true --tlscert=/etc/docker/ca.pem  --tlscert=/etc/docker/server-cert.pem  --tlskey=/etc/docker/server-key.pem -H=127.0.0.1:2376 images
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
 ```
 Pull an image or a repository from a registry:
 ```
-root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerWithTLS# docker --tls=true --tlscert=/etc/dockerca.pem \
-> --tlscert=/etc/docker/server-cert.pem \
-> --tlskey=/etc/docker/server-key.pem -H=127.0.0.1:2376 pull alpine
+root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerWithTLS# docker --tls=true --tlscert=/etc/docker/ca.pem  --tlscert=/etc/docker/server-cert.pem  --tlskey=/etc/docker/server-key.pem -H=127.0.0.1:2376 pull alpine
 Using default tag: latest                                                                                                             
 latest: Pulling from library/alpine                                                                                                   
 0a8490d0dfd3: Pull complete 
@@ -167,22 +161,38 @@ Status: Downloaded newer image for alpine:latest
 ```
 Check in local machine by list images were we pull an image from a registry:
 ```
-root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerWithTLS# docker --tls=true --tlscert=/etc/dockerca.pem \
-> --tlscert=/etc/docker/server-cert.pem \
-> --tlskey=/etc/docker/server-key.pem -H=127.0.0.1:2376 images
+root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerWithTLS# docker --tls=true --tlscert=/etc/docker/ca.pem  --tlscert=/etc/docker/server-cert.pem  --tlskey=/etc/docker/server-key.pem -H=127.0.0.1:2376 images
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
 alpine              latest              88e169ea8f46        4 weeks ago         3.98 MB
-``` 
-On client machine, Script also setup the Docker host and Docker tlsverify, Let start test an out with Docker commands:
+```  
+#### If want to access this docker daemon of local machine which is TLS secured from the different remote machines then we have to copy the certificates on the remote machines.Execute following commands on the remote machine. For me IP of local machine on which certificates and secured docker daemon resides is `45.55.226.76`. Execute following steps on remote machines, with appropriate IP of your local machine.
 
-Check by list containers:
 ```
-root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerwithTLS# docker ps
-CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES   
+$ mkdir -p /etc/docker
+$ scp -r root@45.55.226.76:/etc/docker/* /etc/docker
 ```
-Pull an image or a repository from a registry:
+Now check TLS secured Docker daemon at local machine from remote machine. 
+```
+$ docker --tls=true --tlscert=/etc/docker/ca.pem  --tlscert=/etc/docker/server-cert.pem  --tlskey=/etc/docker/server-key.pem -H=45.55.226.76:2376 ps
+
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+
+```
+
+Lets check the list of images present on local machine.
+
+```
+$ docker --tls=true --tlscert=/etc/docker/ca.pem  --tlscert=/etc/docker/server-cert.pem  --tlskey=/etc/docker/server-key.pem -H=45.55.226.76:2376 images
+
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+alpine              latest              88e169ea8f46        4 weeks ago         3.98 MB
+
+```
+Pull an image or a repository from a registry on local machine from remote machine:
+
 ```      
-root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerwithTLS# docker pull nginx
+$ docker --tls=true --tlscert=/etc/docker/ca.pem  --tlscert=/etc/docker/server-cert.pem  --tlskey=/etc/docker/server-key.pem -H=45.55.226.76:2376 pull nginx
+
 Using default tag: latest
 latest: Pulling from library/nginx
 5040bd298390: Pull complete 
@@ -191,9 +201,12 @@ latest: Pulling from library/nginx
 Digest: sha256:f2d384a6ca8ada733df555be3edc427f2e5f285ebf468aae940843de8cf74645
 Status: Downloaded newer image for nginx:latest
 ```
-Check by list image, An is there two images something shown like: 
+
+If we check the list of images present on the local machine, We can see two images present there: 
+
 ```
-root@ubuntu-512mb-blr1-01:~/helperscripts/SecureDockerwithTLS# docker images
+$ docker --tls=true --tlscert=/etc/docker/ca.pem  --tlscert=/etc/docker/server-cert.pem  --tlskey=/etc/docker/server-key.pem -H=45.55.226.76:2376 images
+
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
 nginx               latest              cc1b61406712        2 days ago          182 MB
 alpine              latest              88e169ea8f46        4 weeks ago         3.98 MB

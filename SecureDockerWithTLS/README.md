@@ -48,7 +48,7 @@ Generating RSA private key, 4096 bit long modulus
 e is 65537 (0x10001)
  ====> Generating server CSR
  ====> Creating subject alternative name
-subjectAltName = IP:139.59.39.36,IP:127.0.0.1
+subjectAltName = IP:45.55.226.76,IP:127.0.0.1
  ====> Signing server CSR with CA
 Signature ok
 subject=/CN=dockerhost.example.com
